@@ -1,7 +1,23 @@
 window.DASHBOARD = {
   "client": "Abi Levine",
-  "updatedAt": "2026-10-02T04:19:45.805958+00:00",
-  "actions": [],
+  "updatedAt": "2026-10-02T04:43:04.893659+00:00",
+  "actions": [
+    {
+      "name": "Grant Access to Transformation Central with Abi FB Page",
+      "due": null,
+      "done": false
+    },
+    {
+      "name": "Link Instagram to Transformation Central FB page",
+      "due": null,
+      "done": false
+    },
+    {
+      "name": "Define Budget",
+      "due": null,
+      "done": false
+    }
+  ],
   "milestones": [
     {
       "name": "5 Initial AI Videos",
@@ -15,6 +31,22 @@ window.DASHBOARD = {
       "name": "Facebook Page Populated",
       "description": "Your Facebook page set up and filled with content.",
       "due": "2026-10-07",
+      "status": "not_started",
+      "tasksDone": 0,
+      "tasksTotal": 0
+    },
+    {
+      "name": "Ads created in ads manager",
+      "description": "",
+      "due": null,
+      "status": "not_started",
+      "tasksDone": 0,
+      "tasksTotal": 0
+    },
+    {
+      "name": "Launch Ads",
+      "description": "",
+      "due": null,
       "status": "not_started",
       "tasksDone": 0,
       "tasksTotal": 0
