@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Dashboard</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d2327;--mute:#6b7280;--line:#e5e3dd;--green:#1f9d55;--greenbg:#e6f6ec;--amber:#d98a00;--amberbg:#fff4de;--red:#c8372d;--redbg:#fde9e7;--gray:#9aa0a6}
+@media(prefers-color-scheme:dark){:root{--bg:#141517;--card:#1e2023;--ink:#eceae5;--mute:#9aa0a6;--line:#2c2f33;--greenbg:#16301f;--amberbg:#33270c;--redbg:#3a1815}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{margin:0 0 4px;font-size:28px}.sub{color:var(--mute);margin:0 0 24px}
+.overall{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;background:var(--amber);border-radius:99px;transition:width .5s}
+.bar.done>i{background:var(--green)}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--gray);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.card.done{border-left-color:var(--green);background:var(--greenbg)}
+.card.in_progress{border-left-color:var(--amber)}.card.overdue{border-left-color:var(--red);background:var(--redbg)}
+.card h2{margin:0;font-size:19px}.card p{margin:6px 0 12px;color:var(--mute);font-size:15px}
+.pill{font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--line);color:var(--mute);white-space:nowrap}
+.done .pill{background:var(--green);color:#fff}.in_progress .pill{background:var(--amberbg);color:var(--amber)}.overdue .pill{background:var(--red);color:#fff}
+.meta{font-size:14px;color:var(--mute);margin-top:8px}
+.needs{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--red);border-radius:14px;padding:18px 20px;margin-bottom:20px}.needs h2{margin:0 0 4px;font-size:19px}.needs>p{margin:0 0 12px;color:var(--mute);font-size:15px}.need{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.box{flex:none;width:22px;height:22px;border:2px solid var(--gray);border-radius:6px;margin-top:1px;display:grid;place-items:center;font-size:14px;color:#fff}.need.done .box{background:var(--green);border-color:var(--green)}.need.done .t{text-decoration:line-through;color:var(--mute)}.need .d{font-size:13px;color:var(--mute)}.needs.clear{border-left-color:var(--green);background:var(--greenbg)}
+footer{color:var(--mute);font-size:13px;text-align:center;margin-top:28px}
+</style></head><body><main>
+<h1 id="title"></h1><p class="sub">Your project at a glance. This page updates automatically as work gets done.</p>
+<section class="overall"><div class="row"><strong id="ovtext"></strong><span id="ovpct" class="pill"></span></div><div class="bar" id="ovbar"><i></i></div></section>
+<section class="needs" id="needs" hidden></section><div id="list"></div><footer id="foot"></footer>
+</main>
+<script src="data/abi-levine.js"></script>
+<script>
+const D=window.DASHBOARD;D.actions=D.actions||[];const first=D.client.split(" ")[0];const fmt=d=>new Date(d+"T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+const today=new Date().toISOString().slice(0,10);
+document.getElementById("title").textContent=D.client+" · Project Progress";
+const ms=D.milestones.map(m=>({...m,state:m.status==="done"?"done":(m.due&&m.due<today?"overdue":m.status)}));
+const label={done:"Complete",in_progress:"In progress",not_started:"Up next",overdue:"Running behind"};
+document.getElementById("list").innerHTML=ms.map(m=>{
+ const pct=m.tasksTotal?Math.round(m.tasksDone/m.tasksTotal*100):(m.state==="in_progress"?50:0),p=m.state==="done"?100:pct;
+ return `<div class="card ${m.state}"><div class="row"><h2>${m.state==="done"?"✓ ":""}${m.name}</h2><span class="pill">${label[m.state]}</span></div>
+ <p>${m.description||""}</p><div class="bar ${m.state==="done"?"done":""}"><i style="width:${p}%"></i></div>
+ <div class="meta">${m.state==="done"?"Completed":"Projected due"}: ${m.due?fmt(m.due):"TBD"}${m.tasksTotal?` · ${m.tasksDone} of ${m.tasksTotal} steps done`:""}</div></div>`}).join("");
+const done=ms.filter(m=>m.state==="done").length,all=ms.length,pct=Math.round(ms.reduce((s,m)=>s+(m.state==="done"?1:m.tasksTotal?m.tasksDone/m.tasksTotal:m.state==="in_progress"?.5:0),0)/all*100);
+document.getElementById("ovtext").textContent=`${done} of ${all} deliverables complete`;
+document.getElementById("ovpct").textContent=pct+"%";
+document.querySelector("#ovbar i").style.width=pct+"%";if(done===all)document.getElementById("ovbar").classList.add("done");
+(()=>{const a=D.actions;if(!a.length)return;const open=a.filter(x=>!x.done).length,el=document.getElementById("needs");el.hidden=false;el.classList.toggle("clear",!open);
+el.innerHTML=`<h2>${open?`Needed from ${first} (${open})`:"✓ Nothing needed from you right now"}</h2><p>${open?"These items help us keep your project on schedule.":"Thank you! We have everything we need."}</p>`+a.map(x=>`<div class="need ${x.done?"done":""}"><div class="box">${x.done?"✓":""}</div><div><div class="t">${x.name}</div>${x.due&&!x.done?`<div class="d">Please send by ${fmt(x.due)}</div>`:""}</div></div>`).join("")})();
+document.getElementById("foot").textContent="Last updated "+new Date(D.updatedAt).toLocaleString();
+</script></body></html>
