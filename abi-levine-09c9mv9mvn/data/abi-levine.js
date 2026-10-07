@@ -1,6 +1,6 @@
 window.DASHBOARD = {
   "client": "Abi Levine",
-  "updatedAt": "2026-10-02T04:43:04.893659+00:00",
+  "updatedAt": "2026-10-07T16:49:01.782504+00:00",
   "actions": [
     {
       "name": "Grant Access to Transformation Central with Abi FB Page",
@@ -23,7 +23,7 @@ window.DASHBOARD = {
       "name": "5 Initial AI Videos",
       "description": "Five AI video ads for your campaign, built and ready for your review.",
       "due": "2026-10-07",
-      "status": "in_progress",
+      "status": "not_started",
       "tasksDone": 0,
       "tasksTotal": 0
     },
