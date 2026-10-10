@@ -1,16 +1,16 @@
 window.DASHBOARD = {
   "client": "Abi Levine",
-  "updatedAt": "2026-10-07T16:49:01.782504+00:00",
+  "updatedAt": "2026-10-10T00:58:46.289642+00:00",
   "actions": [
     {
       "name": "Grant Access to Transformation Central with Abi FB Page",
       "due": null,
-      "done": false
+      "done": true
     },
     {
       "name": "Link Instagram to Transformation Central FB page",
       "due": null,
-      "done": false
+      "done": true
     },
     {
       "name": "Define Budget",
