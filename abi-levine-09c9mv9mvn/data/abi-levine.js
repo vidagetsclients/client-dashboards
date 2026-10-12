@@ -1,6 +1,6 @@
 window.DASHBOARD = {
   "client": "Abi Levine",
-  "updatedAt": "2026-10-10T00:58:46.289642+00:00",
+  "updatedAt": "2026-10-12T18:53:34.890747+00:00",
   "actions": [
     {
       "name": "Grant Access to Transformation Central with Abi FB Page",
@@ -30,7 +30,7 @@ window.DASHBOARD = {
     {
       "name": "Facebook Page Populated",
       "description": "Your Facebook page set up and filled with content.",
-      "due": "2026-10-07",
+      "due": "2026-10-12",
       "status": "not_started",
       "tasksDone": 0,
       "tasksTotal": 0
