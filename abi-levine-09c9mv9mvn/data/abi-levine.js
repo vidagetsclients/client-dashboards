@@ -1,6 +1,6 @@
 window.DASHBOARD = {
   "client": "Abi Levine",
-  "updatedAt": "2026-10-13T03:00:43.310778+00:00",
+  "updatedAt": "2026-10-14T05:45:45.522671+00:00",
   "actions": [
     {
       "name": "Grant Access to Transformation Central with Abi FB Page",
@@ -39,7 +39,7 @@ window.DASHBOARD = {
       "name": "Ads created in ads manager",
       "description": "",
       "due": null,
-      "status": "not_started",
+      "status": "done",
       "tasksDone": 0,
       "tasksTotal": 0
     },
@@ -47,7 +47,7 @@ window.DASHBOARD = {
       "name": "Launch Ads",
       "description": "",
       "due": null,
-      "status": "not_started",
+      "status": "in_progress",
       "tasksDone": 0,
       "tasksTotal": 0
     },
